@@ -1,1 +1,103 @@
- 
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo App</title>
+ </head>
+ <body>
+    <div class="main">
+        <div class="app-header">
+            <h1 class="app-header title">ToDo List</h1>
+            <button class="add-project-btn">+ Add Project</button>
+        </div>
+        <div class="project-bar">
+            <div class="project-list">
+                <div class="project" id="inbox">
+                    <img src="./assets/inbox.svg" alt="inbox image">
+                </div>
+                <div class="project" id="today">
+                    <p>Today</p>
+                </div>
+                <div class="project" id="this week">
+                    <p>This week</p>
+                </div>
+            </div>
+        </div>
+        <div class="header">
+            <h3 class="active-project-title"></h3>
+            <button class="delete-project-btn">Delete</button>
+        </div>
+        <div class="list-section">
+            <div class="task-list"></div>
+        </div>
+    </div>
+    <div class="project-section" style="display: none">
+        <div class="project-section-items">
+            <div class="project-header">New Project</div>
+            <form class="new-project-form">
+                <input type="text" id="project-name" name="project-name" placeholder="Project Title">
+                <p id="project-form-error"></p>
+                <div class="new-project-form-btns">
+                    <button type="submit" id="project-add-yes">Add</button>
+                    <button type="button" id="project-add-no">Cancel</button>
+                </div>
+            </form>
+        </div>           
+    </div>
+    <div class="project-delete" style="display: none">
+        <div class="project-delete-items">
+            <p class="project-delete-warning">Are you sure?</p>
+            <p class="project-delete-message"></p>
+            <div class="project-delete-section-btns">
+                <button type="submit" id="project-delete-yes">Yes</button>
+                <button type="button" id="project-delete-no">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="task-section" style="display: none">
+        <div class="task-section-items">
+            <div class="task-header">New Task</div>
+            <form class="new-task-form">
+                <div class="new-task-form-top">
+                    <input type="text" id="task-title" name="task-title" placeholder="Task Title">
+                    <input type="date" id="task-date-input" name="task-date-input">
+                </div>
+                <textarea name="task-description" id="task-description" placeholder="Description..." rows="5"></textarea>
+                <p class="task-form-error"></p>
+                <div class="new-task-form-btns">
+                    <button type="submit" id="task-add-yes">Add</button>
+                    <button type="button" id="task-add-no">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="task-delete" style="display: none">
+        <div class="task-delete-items">
+            <p class="task-delete-warning">Are you sure?</p>
+            <p class="task-delete-message">You want to delete this task?</p>
+            <div class="task-delete-section-btns">
+                <button type="submit" id="task-delete-yes">Yes</button>
+                <button type="button" id="task-delete-no">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="task-edit" style="display: none">
+        <div class="task-edit-section-items">
+            <div class="task-header">Edit Task</div>
+            <form class="edit-task-form">
+                <div class="edit-task-form-top">
+                    <input type="text" id="task-edit-title" name="task-edit-title">
+                    <input type="date" id="task-edit-date-input" name="task-edit-date-input">
+                </div>
+                <textarea name="task-edit-description" id="task-edit-description" rows="5"></textarea>
+                <p class="task-edit-form-error"></p>
+                <div class="edit-task-form-btns">
+                    <button type="submit" id="task-edit-yes">Edit</button>
+                    <button type="button" id="task-edit-no">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+ </body>
+ </html>
