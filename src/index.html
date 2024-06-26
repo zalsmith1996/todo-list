@@ -1,103 +1,85 @@
- <!DOCTYPE html>
- <html lang="en">
- <head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
- </head>
- <body>
-    <div class="main">
-        <div class="app-header">
-            <h1 class="app-header title">ToDo List</h1>
-            <button class="add-project-btn">+ Add Project</button>
-        </div>
-        <div class="project-bar">
-            <div class="project-list">
-                <div class="project" id="inbox">
-                    <img src="./assets/inbox.svg" alt="inbox image">
-                </div>
-                <div class="project" id="today">
-                    <p>Today</p>
-                </div>
-                <div class="project" id="this week">
-                    <p>This week</p>
-                </div>
+</head>
+<body>
+    <div class="container">
+        <header class="header-section">
+            <div class="header">
+                <img src="assets/logo.svg" alt="logo" class="logo">
+                <h1 class="logo-title">ToDo List</h1>
             </div>
+        </header>
+        <div class="main-body">
+            <div class="left">
+                <div class="new-project">
+                    <h2 class="section-heading">Projects</h2>
+                    <button class="new-project-btn">+ New Project</button>
+                </div>
+                <div class="projects"></div>
+            </div>
+            <div class="right"></div>
         </div>
-        <div class="header">
-            <h3 class="active-project-title"></h3>
-            <button class="delete-project-btn">Delete</button>
-        </div>
-        <div class="list-section">
-            <div class="task-list"></div>
-        </div>
-    </div>
-    <div class="project-section" style="display: none">
-        <div class="project-section-items">
-            <div class="project-header">New Project</div>
+        <div class="new-project-popup" style="display: none"> <!-- New Project Popup -->
+            <div class="new-project-header">New Project</div>
             <form class="new-project-form">
-                <input type="text" id="project-name" name="project-name" placeholder="Project Title">
-                <p id="project-form-error"></p>
+                <input type="text" class="project-title" id="project-title" name="project-title" placeholder="Project Title">
+                <p class="new-project-error"></p>
                 <div class="new-project-form-btns">
-                    <button type="submit" id="project-add-yes">Add</button>
-                    <button type="button" id="project-add-no">Cancel</button>
+                    <button type="submit" class="project-add-yes">Add</button>
+                    <button type="button" class="project-add-no">Cancel</button>
                 </div>
             </form>
-        </div>           
-    </div>
-    <div class="project-delete" style="display: none">
-        <div class="project-delete-items">
+        </div>
+        <div class="project-delete" style="display: none"> <!-- Delete Project Popup -->
             <p class="project-delete-warning">Are you sure?</p>
             <p class="project-delete-message"></p>
-            <div class="project-delete-section-btns">
-                <button type="submit" id="project-delete-yes">Yes</button>
-                <button type="button" id="project-delete-no">No</button>
+            <div class="project-delete-popup-btns">
+                <button type="submit" class="project-delete-yes">Yes</button>
+                <button type="button" class="project-delete-no">No</button>
             </div>
         </div>
-    </div>
-    <div class="task-section" style="display: none">
-        <div class="task-section-items">
-            <div class="task-header">New Task</div>
+        <div class="new-task-popup" style="display: none"> <!-- New Task Popup -->
+            <div class="new-task-header">New Task</div>
             <form class="new-task-form">
                 <div class="new-task-form-top">
-                    <input type="text" id="task-title" name="task-title" placeholder="Task Title">
-                    <input type="date" id="task-date-input" name="task-date-input">
+                    <input type="text" class="task-title" id="task-title" name="task-title" placeholder="Task TItle">
+                    <input type="date" class="task-date-input" id="task-date-input" name="task-date-input">
                 </div>
-                <textarea name="task-description" id="task-description" placeholder="Description..." rows="5"></textarea>
+                <textarea name="task-description" id="task-description" class="task-description" placeholder="Description..." rows="5"></textarea>
                 <p class="task-form-error"></p>
                 <div class="new-task-form-btns">
-                    <button type="submit" id="task-add-yes">Add</button>
-                    <button type="button" id="task-add-no">Cancel</button>
+                    <button type="submit" class="task-add-yes">Add</button>
+                    <button type="button" class="task-add-no">Cancel</button>
                 </div>
             </form>
         </div>
-    </div>
-    <div class="task-delete" style="display: none">
-        <div class="task-delete-items">
+        <div class="task-delete" style="display: none"> <!-- Task Delete Popup -->
             <p class="task-delete-warning">Are you sure?</p>
             <p class="task-delete-message">You want to delete this task?</p>
-            <div class="task-delete-section-btns">
-                <button type="submit" id="task-delete-yes">Yes</button>
-                <button type="button" id="task-delete-no">No</button>
+            <div class="task-delete-popup-btns">
+                <button type="submit" class="task-delete-yes">Yes</button>
+                <button type="button" class="task-delete-no">No</button>
             </div>
         </div>
-    </div>
-    <div class="task-edit" style="display: none">
-        <div class="task-edit-section-items">
-            <div class="task-header">Edit Task</div>
+        <div class="task-edit-popup" style="display: none"> <!-- Task Edit Popup -->
+            <div class="task-edit-header">Edit Task</div>
             <form class="edit-task-form">
                 <div class="edit-task-form-top">
-                    <input type="text" id="task-edit-title" name="task-edit-title">
-                    <input type="date" id="task-edit-date-input" name="task-edit-date-input">
+                    <input type="text" class="task-edit-title" id="task-edit-title" name="task-edit-title">
+                    <input type="date" class="task-edit-date-input" id="task-edit-date-input" name="task-edit-date-input">
                 </div>
-                <textarea name="task-edit-description" id="task-edit-description" rows="5"></textarea>
+                <textarea name="task-edit-description" id="task-edit-decsription" class="task-edit-description" rows="5"></textarea>
                 <p class="task-edit-form-error"></p>
                 <div class="edit-task-form-btns">
-                    <button type="submit" id="task-edit-yes">Edit</button>
-                    <button type="button" id="task-edit-no">Cancel</button>
+                    <button type="submit" class="task-edit-yes">Edit</button>
+                    <button type="button" class="task-edit-no">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
- </body>
- </html>
+</body>
+</html>

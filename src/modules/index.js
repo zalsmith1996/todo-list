@@ -1,2 +1,6 @@
  import '../assets/styles.css';
- import UI from './ui.js';
+ import { render } from './ui.js';
+
+ document.addEventListener('DOMContentLoaded', () => {
+    render();
+ });
