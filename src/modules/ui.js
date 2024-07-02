@@ -1,3 +1,5 @@
+import { updateProjects } from './storage.js';
+
 // DOM elements included in case HTML file
 const d = document;
 
