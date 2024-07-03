@@ -12,7 +12,7 @@
 
 /* All elements with flex display, column direction */
 
-body, .main-body, .header, .main-body, .left {
+body, .main-body, .header, .main-body, .left, .right, .projects, .project-listing {
    display: flex;
 }
 
@@ -21,6 +21,7 @@ body {
    width: auto;
    height: 100vh;
    background-color: var(--cream);
+   position: relative;
 }
 
 .header {
@@ -87,6 +88,11 @@ body {
    margin-bottom: 0.6rem;
 }
 
+.new-project {
+   width: 100%;
+   text-align: center;
+}
+
 .new-project-btn {
    border-radius: 8px;
    padding: 4px;
@@ -99,3 +105,70 @@ body {
 .new-project-btn:hover {
    background-color: var(--shadow);
 }
+
+.new-project-popup {
+   border: 2px solid var(--blue);
+   background-color: var(--blue);
+   border-radius: 8px;
+   width: 12rem;
+   height: auto;
+   text-align: center;
+   color: var(--blue);
+   position: absolute;
+   top: 40%;
+   left: 50%;
+}
+
+.new-project-header {
+   background-color: var(--cream);
+   border-radius: 8px;
+   color: var(--blue);
+   font-weight: 600;
+}
+
+.project-title {
+   background-color: var(--cream);
+   border-radius: 8px;
+   border: var(--cream);
+   padding: 3px;
+   margin: 4px;
+}
+
+.project-title:focus {
+   outline: none;
+   background-color: var(--shadow);
+}
+
+.project-add-yes, .project-add-no {
+   width: 30%;
+   border-radius: 8px;
+   padding: 3px;
+   text-align: center;
+   background-color: var(--cream);
+   border: var(--cream);
+   color: var(--blue);
+}
+
+.project-add-yes:hover, .project-add-no:hover {
+   background-color: var(--shadow);
+}
+
+.projects {
+   flex-direction: column;
+   width: 100%;
+}
+
+.project-listing {
+   justify-content: space-around;
+   border: 2px solid var(--blue);
+   border-radius: 8px;
+   color: var(--cream);
+   background-color: var(--blue);
+   margin: 1px;
+}
+
+.project-listing:hover {
+   background-color: var(--cream);
+   color: var(--blue);
+}
+
