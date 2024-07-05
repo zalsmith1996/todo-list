@@ -23,14 +23,20 @@ export function updateProjects(projectArray) {
     projectListing.innerHTML = '';
 
     for (const project of projects) {
-        const projectDiv = d.createElement('div');
+        const projectButton = d.createElement('button');
         const listing = d.createElement('p');
-        projectDiv.classList.add('project-listing');
+        const deleteIcon = d.createElement('img');
+
+        deleteIcon.setAttribute('src', '/assets/delete.svg');
+
+        projectButton.classList.add('project-listing');
         listing.classList.add('project-listing-title');
+        deleteIcon.classList.add('delete-project-listing');
         listing.textContent = project.title;
 
-        projectDiv.appendChild(listing);
-        projectListing.append(projectDiv);
+        projectButton.appendChild(listing);
+        projectButton.appendChild(deleteIcon);
+        projectListing.append(projectButton);
     }
 };
 
@@ -39,6 +45,30 @@ export function addProject() {
     projects.push(new Project(projectName.value, {}));
     updateProjects(projects);
     projectName.value = '';
+};
+
+export function getProjectName(event) {
+    // Closest does not take sibling elements into account,
+    // Use closest to find parent button, then querySelector to find sibling element
+    return event.target.closest('button').querySelector('.project-listing-title').textContent;
+};
+
+export function deleteProjectForm(projectName) {
+    const projectDeleteMessage = d.querySelector('.project-delete-message');
+    projectDeleteMessage.textContent = `Delete ${projectName}?`;
+};
+
+export function deleteProject(chosenProjectName) {   
+    const currentProjectList = JSON.parse(localStorage.getItem('projects'));
+    delete currentProjectList[chosenProjectName];
+
+    // above is not working, instead:
+    // look through each index and find the title that matches the chosenProjectName, then delete that
+
+
+    localStorage.setItem('projects', JSON.stringify(currentProjectList));
+    updateProjects(currentProjectList);
+    console.log(currentProjectList);
 };
 
 

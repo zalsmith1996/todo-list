@@ -12,7 +12,7 @@
 
 /* All elements with flex display, column direction */
 
-body, .main-body, .header, .main-body, .left, .right, .projects, .project-listing {
+body, .main-body, .header, .main-body, .left, .right, .projects {
    display: flex;
 }
 
@@ -64,7 +64,7 @@ body {
 }
 
 .left {
-   min-width: 120px;
+   min-width: 33%;
    background-color: var(--cream);
    flex-direction: column;
    justify-content: flex-start;
@@ -73,7 +73,7 @@ body {
 }
 
 .right {
-   min-width: 50%;
+   min-width: auto;
    background-color: var(--cream);
    flex: 1;
    flex-direction: column;
@@ -159,12 +159,14 @@ body {
 }
 
 .project-listing {
-   justify-content: space-around;
+   display: grid;
+   grid-template-columns: repeat(3, 1fr);
    border: 2px solid var(--blue);
    border-radius: 8px;
    color: var(--cream);
    background-color: var(--blue);
    margin: 1px;
+   width: 100%;
 }
 
 .project-listing:hover {
@@ -172,3 +174,30 @@ body {
    color: var(--blue);
 }
 
+.project-listing-title {
+   grid-column: 2;
+}
+
+.delete-project-listing {
+   width: 1rem;
+   height: auto;
+   grid-column: 3;
+   justify-self: center;
+}
+
+.project-delete {
+   border: 2px solid var(--blue);
+   background-color: var(--blue);
+   border-radius: 8px;
+   width: 12rem;
+   height: auto;
+   text-align: center;
+   color: var(--cream);
+   position: absolute;
+   top: 40%;
+   left: 50%;
+}
+
+.project-delete-warning {
+   font-weight: 800;
+}
