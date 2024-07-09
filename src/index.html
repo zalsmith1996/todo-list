@@ -21,7 +21,12 @@
                 </div>
                 <div class="projects"></div>
             </div>
-            <div class="right"></div>
+            <div class="right">
+                <div class="current-project-header" style="display: none">
+                    <h2 class="current-project-title"></h2>
+                    <button class="new-task-btn">+ New Task</button>
+                </div>
+            </div>
         </div>
         <div class="new-project-popup" style="display: none"> <!-- New Project Popup -->
             <div class="new-project-header">New Project</div>
@@ -46,7 +51,7 @@
             <div class="new-task-header">New Task</div>
             <form class="new-task-form">
                 <div class="new-task-form-top">
-                    <input type="text" class="task-title" id="task-title" name="task-title" placeholder="Task TItle">
+                    <input type="text" class="task-title" id="task-title" name="task-title" placeholder="Task Title">
                     <input type="date" class="task-date-input" id="task-date-input" name="task-date-input">
                 </div>
                 <textarea name="task-description" id="task-description" class="task-description" placeholder="Description..." rows="5"></textarea>

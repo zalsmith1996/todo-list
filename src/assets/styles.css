@@ -24,6 +24,10 @@ body {
    position: relative;
 }
 
+textarea {
+   resize: none;
+}
+
 .header {
    color: var(--cream);
    justify-content: flex-end;
@@ -93,7 +97,7 @@ body {
    text-align: center;
 }
 
-.new-project-btn {
+.new-project-btn, .new-task-btn {
    border-radius: 8px;
    padding: 4px;
    background-color: var(--cream);
@@ -102,11 +106,15 @@ body {
    width: 100%;
 }
 
-.new-project-btn:hover {
+.new-task-btn {
+   width: fit-content;
+}
+
+.new-project-btn:hover, .new-task-btn:hover {
    background-color: var(--shadow);
 }
 
-.new-project-popup {
+.new-project-popup, .new-task-popup {
    border: 2px solid var(--blue);
    background-color: var(--blue);
    border-radius: 8px;
@@ -126,7 +134,8 @@ body {
    font-weight: 600;
 }
 
-.project-title {
+.project-title, .task-title, .task-date-input, .task-description {
+   color: var(--blue);
    background-color: var(--cream);
    border-radius: 8px;
    border: var(--cream);
@@ -134,12 +143,16 @@ body {
    margin: 4px;
 }
 
-.project-title:focus {
+.project-title::placeholder, .task-title::placeholder, .task-date-input::placeholder, .task-description::placeholder {
+   color: var(--blue);
+}
+
+.project-title:focus, .task-title:focus, .task-date-input:focus, .task-description:focus {
    outline: none;
    background-color: var(--shadow);
 }
 
-.project-add-yes, .project-add-no {
+.project-add-yes, .project-add-no, .task-add-yes, .task-add-no {
    width: 30%;
    border-radius: 8px;
    padding: 3px;
@@ -159,8 +172,9 @@ body {
 }
 
 .project-listing {
-   display: grid;
-   grid-template-columns: repeat(3, 1fr);
+   display: flex;
+   justify-content: center;
+   align-items: center;
    border: 2px solid var(--blue);
    border-radius: 8px;
    color: var(--cream);
@@ -172,10 +186,6 @@ body {
 .project-listing:hover {
    background-color: var(--cream);
    color: var(--blue);
-}
-
-.project-listing-title {
-   grid-column: 2;
 }
 
 .delete-project-listing {
@@ -200,4 +210,18 @@ body {
 
 .project-delete-warning {
    font-weight: 800;
+}
+
+.current-project-header {
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
+}
+
+.current-project-title {
+   text-decoration: underline;
+   text-underline-offset: 0.5rem;
+   padding-bottom: 0.5rem;
+   color: var(--blue);
 }

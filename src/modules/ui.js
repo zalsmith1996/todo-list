@@ -1,9 +1,10 @@
-import { addProject, deleteProjectForm, deleteProject, getProjectName } from './storage.js';
+import { addProject, deleteProjectForm, deleteProject, getProjectName, displayCurrentProject, addTask } from './storage.js';
 
 // DOM elements included in case HTML file
 const d = document;
 const newProjectPopup = d.querySelector('.new-project-popup');
 const deleteProjectPopup = d.querySelector('.project-delete');
+const newTaskPopup = d.querySelector('.new-task-popup');
 
 let currentProjectName;
 
@@ -35,6 +36,24 @@ export function render() {
         if (e.target.matches('.project-delete-no')) {
             e.preventDefault();
             deleteProjectPopup.style.display = 'none';
+        }
+        if (e.target.matches('.project-listing')) {
+            e.preventDefault();
+            currentProjectName = getProjectName(e);
+            displayCurrentProject(currentProjectName);
+        }
+        if (e.target.matches('.new-task-btn')) {
+            e.preventDefault();
+            newTaskPopup.style.display = 'block';
+        }
+        if (e.target.matches('.task-add-yes')) {
+            e.preventDefault();
+            addTask();
+            newTaskPopup.style.display = 'none';
+        }
+        if (e.target.matches('.task-add-no')) {
+            e.preventDefault();
+            newTaskPopup.style.display = 'none';
         }
     });
 };

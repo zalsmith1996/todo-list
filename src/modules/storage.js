@@ -6,9 +6,12 @@ const projectListing = d.querySelector('.projects');
 let projects = [];
 
 // Create default project list and store in localStorage
-
 if (localStorage.getItem('projects') === null) {
-    projects = [new Project('Default', {'Example Task': new Task('Example Task', '2024/09/17', 'Example description')})];
+    projects = {};
+    const defaultProject = new Project('Default');
+    projects[defaultProject.title] = {};
+    const defaultTask = new Task('Example task', '2024/09/17', 'Example description');
+    projects[defaultProject.title][defaultTask.taskTitle] = [defaultTask.taskDueDate, defaultTask.taskDescription];
     updateProjects(projects);
 } else {
     projects = JSON.parse(localStorage.getItem('projects'));
@@ -18,23 +21,21 @@ if (localStorage.getItem('projects') === null) {
 
 
 export function updateProjects(projectArray) {
-    localStorage.setItem('projects', JSON.stringify(projectArray));
-
+    // Remove all previously listed projects in order to update DOM
     projectListing.innerHTML = '';
 
-    for (const project of projects) {
+    localStorage.setItem('projects', JSON.stringify(projectArray));
+
+    for (const project in projects) {
         const projectButton = d.createElement('button');
-        const listing = d.createElement('p');
         const deleteIcon = d.createElement('img');
 
         deleteIcon.setAttribute('src', '/assets/delete.svg');
 
         projectButton.classList.add('project-listing');
-        listing.classList.add('project-listing-title');
         deleteIcon.classList.add('delete-project-listing');
-        listing.textContent = project.title;
+        projectButton.textContent = project;
 
-        projectButton.appendChild(listing);
         projectButton.appendChild(deleteIcon);
         projectListing.append(projectButton);
     }
@@ -42,7 +43,12 @@ export function updateProjects(projectArray) {
 
 export function addProject() {
     let projectName = d.querySelector('.project-title');
-    projects.push(new Project(projectName.value, {}));
+    //projects.push(new Project(projectName.value, {}));
+
+
+
+
+
     updateProjects(projects);
     projectName.value = '';
 };
@@ -50,7 +56,7 @@ export function addProject() {
 export function getProjectName(event) {
     // Closest does not take sibling elements into account,
     // Use closest to find parent button, then querySelector to find sibling element
-    return event.target.closest('button').querySelector('.project-listing-title').textContent;
+    return event.target.closest('button').textContent;
 };
 
 export function deleteProjectForm(projectName) {
@@ -60,16 +66,48 @@ export function deleteProjectForm(projectName) {
 
 export function deleteProject(chosenProjectName) {   
     const currentProjectList = JSON.parse(localStorage.getItem('projects'));
-    delete currentProjectList[chosenProjectName];
+    let projectIndex;
+    for (const project of currentProjectList) {
+        if (project.title === chosenProjectName) {
+            projectIndex = currentProjectList.indexOf(project);
+        };
+    };
 
-    // above is not working, instead:
-    // look through each index and find the title that matches the chosenProjectName, then delete that
-
-
-    localStorage.setItem('projects', JSON.stringify(currentProjectList));
+    currentProjectList.splice(currentProjectList.indexOf(projectIndex), 1);
     updateProjects(currentProjectList);
-    console.log(currentProjectList);
+    location.reload();
 };
 
+export function displayCurrentProject(selectedProject) {
+    const selectedProjectTitle = d.querySelector('.current-project-title');
+    const projectInfoDiv = d.querySelector('.current-project-header');
 
-// When a project is active (being displayed) add a delete button to the bottom of the task display window
+    projectInfoDiv.style.display = 'flex';
+
+    selectedProjectTitle.textContent = selectedProject;
+
+
+    // add functionality that shows current tasks associated with display project if they exist
+};
+
+export function addTask() {
+    const currentProject = d.querySelector('.current-project-title').textContent;
+    const currentProjectList = JSON.parse(localStorage.getItem('projects'));
+
+    let projectIndex;
+    for (const project of currentProjectList) {
+        if (project.title === currentProject) {
+            projectIndex = currentProjectList.indexOf(project);
+        };
+    };
+
+    const taskTitle = d.querySelector('.task-title');
+    const taskDueDate = d.querySelector('.task-date-input');
+    const taskDescription = d.querySelector('.task-description');
+
+   // currentProjectList[projectIndex].push(new Task(taskTitle.value, taskDueDate, taskDescription));
+    
+    //console.log(currentProject, projectIndex, currentProjectList);
+
+    console.log(currentProjectList[0].task.taskTitle);
+}
