@@ -5,6 +5,8 @@ const d = document;
 const newProjectPopup = d.querySelector('.new-project-popup');
 const deleteProjectPopup = d.querySelector('.project-delete');
 const newTaskPopup = d.querySelector('.new-task-popup');
+const projectInput = d.querySelector('.project-title');
+const taskTitleInput = d.querySelector('.task-title');
 
 let currentProjectName;
 
@@ -13,6 +15,7 @@ export function render() {
     d.body.addEventListener('click', (e) => {
         if (e.target.matches('.new-project-btn')) {
             newProjectPopup.style.display = 'block';
+            projectInput.focus();
         }
         if (e.target.matches('.project-add-yes')) {
             e.preventDefault();
@@ -45,6 +48,7 @@ export function render() {
         if (e.target.matches('.new-task-btn')) {
             e.preventDefault();
             newTaskPopup.style.display = 'block';
+            taskTitleInput.focus();
         }
         if (e.target.matches('.task-add-yes')) {
             e.preventDefault();

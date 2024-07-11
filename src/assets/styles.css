@@ -26,6 +26,24 @@ body {
 
 textarea {
    resize: none;
+   white-space: pre-wrap;
+}
+
+*::-webkit-scrollbar {
+   background-color: var(--cream);
+   width: 0.2rem;
+   border-radius: 16px;
+}
+
+*::-webkit-scrollbar-track {
+   background-color: var(--cream);
+   border-radius: 16px;
+}
+
+*::-webkit-scrollbar-thumb {
+   background-color: var(--blue);
+   border-radius: 16px;
+   border: 4px solid var(--blue);
 }
 
 .header {
@@ -152,7 +170,7 @@ textarea {
    background-color: var(--shadow);
 }
 
-.project-add-yes, .project-add-no, .task-add-yes, .task-add-no {
+.project-add-yes, .project-add-no, .task-add-yes, .task-add-no, .project-delete-yes, .project-delete-no {
    width: 30%;
    border-radius: 8px;
    padding: 3px;
@@ -162,7 +180,7 @@ textarea {
    color: var(--blue);
 }
 
-.project-add-yes:hover, .project-add-no:hover {
+.project-add-yes:hover, .project-add-no:hover, .task-add-yes:hover, .task-add-no:hover, .project-delete-yes:hover, .project-delete-no:hover {
    background-color: var(--shadow);
 }
 
@@ -224,4 +242,17 @@ textarea {
    text-underline-offset: 0.5rem;
    padding-bottom: 0.5rem;
    color: var(--blue);
+}
+
+.tasks {
+   width: 100%;
+   height: 100%;
+}
+
+.task-card {
+   width: 12rem;
+   height: auto;
+   text-align: center;
+   border: 2px solid var(--blue);
+   border-radius: 8px;
 }
