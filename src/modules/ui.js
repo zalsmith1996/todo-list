@@ -1,4 +1,4 @@
-import { addProject, deleteProjectForm, deleteProject, getProjectName, displayCurrentProject, addTask } from './storage.js';
+import { addProject, deleteProjectForm, deleteProject, getProjectName, displayCurrentProject, addTask, editTask, deleteTask } from './storage.js';
 
 // DOM elements included in case HTML file
 const d = document;
@@ -58,6 +58,15 @@ export function render() {
         if (e.target.matches('.task-add-no')) {
             e.preventDefault();
             newTaskPopup.style.display = 'none';
+        }
+        if (e.target.matches('.task-edit-btn')) {
+            //get current task name, and current project
+            e.preventDefault();
+            editTask();
+        }
+        if (e.target.matches('.task-delete-btn')) {
+            e.preventDefault();
+            deleteTask(e);
         }
     });
 };
