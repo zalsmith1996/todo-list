@@ -12,15 +12,13 @@ if (localStorage.getItem('projects') === null) {
     projects[0].tasks.push(new Task('Example task', '2024-09-17', 'Example description'));
     projects[0].tasks.push(new Task('Example task 2', '2024-09-17', 'Example description 2'));
     updateProjects(projects);
-    displayCurrentProject();
 } else {
     projects = JSON.parse(localStorage.getItem('projects'));
     updateProjects(projects);
-    displayCurrentProject();
-}
+};
 
-export function updateProjects(projectArray) {
-    // Remove all previously listed projects in order to update DOM
+function updateProjects(projectArray) {
+    // Remove all previously listed projects to update DOM
     projectListing.innerHTML = '';
 
     localStorage.setItem('projects', JSON.stringify(projectArray));
@@ -29,71 +27,14 @@ export function updateProjects(projectArray) {
         const projectButton = d.createElement('button');
         const deleteIcon = d.createElement('img');
 
-        deleteIcon.setAttribute('src', '/assets/delete.svg');
+        deleteIcon.setAttribute('src', 'assets/delete.svg');
 
         projectButton.classList.add('project-listing');
         deleteIcon.classList.add('delete-project-listing');
         projectButton.textContent = project.title;
 
         projectButton.appendChild(deleteIcon);
-        projectListing.append(projectButton);
-    };
-
-    updateTasks(projectArray);
-};
-
-export function updateTasks(projectArray) {
-    // Remove all previously listed tasks in order to update DOM
-    let childElement = taskListing.lastElementChild;
-
-    while (childElement) {
-        taskListing.removeChild(childElement);
-        childElement.taskListing.lastElementChild;
-    };
-
-    // New tasks will have been pushed into projects array,
-    // Updating projects in localStorage also updates tasks
-    localStorage.setItem('projects', JSON.stringify(projectArray));
-
-    // double nested for loop to go through tasks and add to .tasks container
-    for (const project of projects) {
-        for (const task of project.tasks) {
-            const taskCard = d.createElement('div');
-            const taskCardTitle = d.createElement('h3');
-            const taskCardDate = d.createElement('h5');
-            const taskCardDescr = d.createElement('textarea');
-            const taskCardBtns = d.createElement('div');
-            const taskEditBtn = d.createElement('button');
-            const taskDeleteBtn = d.createElement('button');
-
-            taskCard.classList.add('task-card');
-            taskCardTitle.classList.add('task-card-title');
-            taskCardDate.classList.add('task-card-date');
-            taskCardDescr.classList.add('task-card-descr');
-            taskCardBtns.classList.add('task-card-btns');
-            taskEditBtn.classList.add('task-edit-btn');
-            taskDeleteBtn.classList.add('task-delete-btn');
-
-            const taskTitle = task.name;
-            const taskDate = task.dueDate;
-            const taskDescr = task.description;
-
-            taskCardTitle.textContent = taskTitle;
-            taskCardDate.textContent = taskDate;
-            taskCardDescr.textContent = taskDescr;
-
-            taskCardDescr.readOnly = true;
-            taskEditBtn.textContent = 'Edit';
-            taskDeleteBtn.textContent = 'Delete';
-            
-            taskCardBtns.appendChild(taskEditBtn);
-            taskCardBtns.appendChild(taskDeleteBtn);
-            taskCard.appendChild(taskCardTitle);
-            taskCard.appendChild(taskCardDate);
-            taskCard.appendChild(taskCardDescr);
-            taskCard.appendChild(taskCardBtns);
-            taskListing.appendChild(taskCard);
-        };
+        projectListing.appendChild(projectButton);
     };
 };
 
@@ -105,8 +46,6 @@ export function addProject() {
 };
 
 export function getProjectName(event) {
-    // Closest does not take sibling elements into account,
-    // Use closest to find parent button, then querySelector to find sibling element
     return event.target.closest('button').textContent;
 };
 
@@ -115,7 +54,7 @@ export function deleteProjectForm(projectName) {
     projectDeleteMessage.textContent = `Delete ${projectName}?`;
 };
 
-export function deleteProject(chosenProjectName) {   
+export function deleteProject(chosenProjectName) {
     const currentProjectList = JSON.parse(localStorage.getItem('projects'));
     let projectIndex;
     for (const project of currentProjectList) {
@@ -123,29 +62,64 @@ export function deleteProject(chosenProjectName) {
             projectIndex = currentProjectList.indexOf(project);
         };
     };
-
     currentProjectList.splice(currentProjectList.indexOf(projectIndex), 1);
     updateProjects(currentProjectList);
-    location.reload();
 };
 
-export function displayCurrentProject(selectedProject) {
+export function displayCurrentProject(selectedProject = 'Default') {
     const selectedProjectTitle = d.querySelector('.current-project-title');
     const projectInfoDiv = d.querySelector('.current-project-header');
 
     projectInfoDiv.style.display = 'flex';
-
     selectedProjectTitle.textContent = selectedProject;
+    displayCurrentTasks();
+};
 
-    // Displays tasks currently stored in selectedProject
-    updateTasks(projects);
+function updateTasks(projectArray) {
+    // New tasks have been pushed to projects array,
+    // Updating projects in localStorage also updates tasks
+    localStorage.setItem('projects', JSON.stringify(projectArray));
+
+    displayCurrentTasks();
+};
+
+function displayCurrentTasks() {
+    taskListing.innerHTML = '';
+
+    const projectList = JSON.parse(localStorage.getItem('projects'));
+    const currentProject = d.querySelector('.current-project-title').textContent;
+
+    let projectIndex;
+    for (const project of projectList) {
+        if (project.title === currentProject) {
+            projectIndex = projectList.indexOf(project);
+        };
+    };
+
+    for (const task of projectList[projectIndex].tasks) {
+        const taskCard = d.createElement('div');
+        taskCard.classList.add('task-card');
+
+        taskCard.innerHTML = `
+            <h3 class="task-card-title">${task.name}</h3>
+            <h5 class="task-card-date">${task.dueDate}</h5>
+            <textarea class="task-card-descr" readOnly>${task.description}</textarea>
+            <div class="task-card-btns">
+                <button class="task-edit-btn" type="submit">Edit</button>
+                <button class="task-delete-btn" type="submit">Delete</button>
+            </div>
+        `;
+
+        taskListing.append(taskCard);
+        console.log(task.name);
+    };
 };
 
 export function addTask() {
     const currentProject = d.querySelector('.current-project-title').textContent;
     const currentProjectList = JSON.parse(localStorage.getItem('projects'));
-
     let projectIndex;
+
     for (const project of currentProjectList) {
         if (project.title === currentProject) {
             projectIndex = currentProjectList.indexOf(project);
@@ -156,9 +130,12 @@ export function addTask() {
     const taskDueDate = d.querySelector('.task-date-input');
     const taskDescription = d.querySelector('.task-description');
 
-    projects[projectIndex].tasks.push(new Task(taskTitle.value, taskDueDate.value, taskDescription.value));
+    currentProjectList[projectIndex].tasks.push(new Task(taskTitle.value, taskDueDate.value, taskDescription.value));
 
-    updateTasks(projects);
+    updateTasks(currentProjectList);
+};
+
+export function editTask() {
 
 };
 
@@ -166,8 +143,8 @@ export function deleteTask(e) {
     const currentProject = d.querySelector('.current-project-title').textContent;
     const currentTask = e.target.closest('.task-card').querySelector('.task-card-title').textContent;
     const currentProjectList = JSON.parse(localStorage.getItem('projects'));
-
     let projectIndex;
+
     for (const project of currentProjectList) {
         if (project.title === currentProject) {
             projectIndex = currentProjectList.indexOf(project);
@@ -175,18 +152,13 @@ export function deleteTask(e) {
     };
 
     let taskIndex;
-    for (const task of projects[projectIndex].tasks) {
+    for (const task of currentProjectList[projectIndex].tasks) {
         if (task.name === currentTask) {
-            taskIndex = projects[projectIndex].tasks.indexOf(task);
-        }
-        projects[projectIndex].tasks.splice(projects[projectIndex].tasks.indexOf(taskIndex), 1);
+            taskIndex = currentProjectList[projectIndex].tasks.indexOf(task);
+        };
     };
 
-    updateProjects(currentProjectList);
+    currentProjectList[projectIndex].tasks.splice(currentProjectList[projectIndex].tasks.indexOf(taskIndex), 1);
+
     updateTasks(currentProjectList);
-    location.reload();
 };
-
-export function editTask() {
-
-}
