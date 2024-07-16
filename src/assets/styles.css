@@ -12,7 +12,7 @@
 
 /* All elements with flex display, column direction */
 
-body, .main-body, .header, .main-body, .left, .right, .projects {
+body, .main-body, .header, .main-body, .left, .right, .projects, .task-edit-popup {
    display: flex;
 }
 
@@ -132,7 +132,7 @@ textarea {
    background-color: var(--shadow);
 }
 
-.new-project-popup, .new-task-popup {
+.new-project-popup, .new-task-popup, .task-edit-popup {
    border: 2px solid var(--blue);
    background-color: var(--blue);
    border-radius: 8px;
@@ -145,14 +145,14 @@ textarea {
    left: 50%;
 }
 
-.new-project-header {
+.new-project-header, .task-edit-header {
    background-color: var(--cream);
    border-radius: 8px;
    color: var(--blue);
    font-weight: 600;
 }
 
-.project-title, .task-title, .task-date-input, .task-description, .task-card-descr {
+.project-title, .task-title, .task-date-input, .task-description, .task-card-descr, .task-edit-title, .task-edit-date-input, .task-edit-description {
    color: var(--blue);
    background-color: var(--cream);
    border-radius: 8px;
@@ -165,12 +165,17 @@ textarea {
    color: var(--blue);
 }
 
-.project-title:focus, .task-title:focus, .task-date-input:focus, .task-description:focus {
+.project-title:focus, .task-title:focus, .task-date-input:focus, .task-description:focus, .task-edit-title:focus, .task-edit-date-input:focus, .task-edit-description:Focus {
    outline: none;
    background-color: var(--shadow);
 }
 
-.project-add-yes, .project-add-no, .task-add-yes, .task-add-no, .project-delete-yes, .project-delete-no, .task-edit-btn, .task-delete-btn {
+.task-edit-popup {
+   flex-direction: column;
+   border: 2px outset var(--blue);
+}
+
+.project-add-yes, .project-add-no, .task-add-yes, .task-add-no, .project-delete-yes, .project-delete-no, .task-edit-btn, .task-delete-btn, .task-edit-yes, .task-edit-no {
    width: 30%;
    border-radius: 8px;
    padding: 3px;
@@ -180,7 +185,7 @@ textarea {
    color: var(--blue);
 }
 
-.project-add-yes:hover, .project-add-no:hover, .task-add-yes:hover, .task-add-no:hover, .project-delete-yes:hover, .project-delete-no:hover, .task-edit-btn:hover, .task-delete-btn:hover {
+.project-add-yes:hover, .project-add-no:hover, .task-add-yes:hover, .task-add-no:hover, .project-delete-yes:hover, .project-delete-no:hover, .task-edit-btn:hover, .task-delete-btn:hover, .task-edit-yes:hover, .task-edit-no:hover {
    background-color: var(--shadow);
 }
 

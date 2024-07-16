@@ -1,10 +1,11 @@
-import { addProject, deleteProjectForm, deleteProject, getProjectName, displayCurrentProject, addTask, editTask, deleteTask } from './storage.js';
+import { addProject, deleteProjectForm, deleteProject, getProjectName, displayCurrentProject, addTask, editTask, deleteTask, openEditTaskForm } from './storage.js';
 
 // DOM elements included in case HTML file
 const d = document;
 const newProjectPopup = d.querySelector('.new-project-popup');
 const deleteProjectPopup = d.querySelector('.project-delete');
 const newTaskPopup = d.querySelector('.new-task-popup');
+const editTaskPopup = d.querySelector('.task-edit-popup');
 const projectInput = d.querySelector('.project-title');
 const taskTitleInput = d.querySelector('.task-title');
 
@@ -60,13 +61,22 @@ export function render() {
             newTaskPopup.style.display = 'none';
         }
         if (e.target.matches('.task-edit-btn')) {
-            //get current task name, and current project
             e.preventDefault();
-            editTask();
+            openEditTaskForm(e);
+            editTaskPopup.style.display = 'flex';
         }
         if (e.target.matches('.task-delete-btn')) {
             e.preventDefault();
             deleteTask(e);
+        }
+        if (e.target.matches('.task-edit-yes')) {
+            e.preventDefault();
+            editTask();
+            editTaskPopup.style.display = 'none';
+        }
+        if (e.target.matches('.task-edit-no')) {
+            e.preventDefault();
+            editTaskPopup.style.display = 'none';
         }
     });
 };

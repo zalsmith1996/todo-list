@@ -34,7 +34,7 @@ function updateProjects(projectArray) {
         projectButton.textContent = project.title;
 
         projectButton.appendChild(deleteIcon);
-        projectListing.appendChild(projectButton);
+        projectListing.append(projectButton);
     };
 };
 
@@ -64,6 +64,7 @@ export function deleteProject(chosenProjectName) {
     };
     currentProjectList.splice(currentProjectList.indexOf(projectIndex), 1);
     updateProjects(currentProjectList);
+    location.reload();
 };
 
 export function displayCurrentProject(selectedProject = 'Default') {
@@ -111,7 +112,6 @@ function displayCurrentTasks() {
         `;
 
         taskListing.append(taskCard);
-        console.log(task.name);
     };
 };
 
@@ -135,8 +135,66 @@ export function addTask() {
     updateTasks(currentProjectList);
 };
 
-export function editTask() {
+export function openEditTaskForm(e) {
+    // fill in edit task popup form with task values based on closest task index and current project
+    const currentProject = d.querySelector('.current-project-title').textContent;
+    const currentTask = e.target.closest('.task-card').querySelector('.task-card-title').textContent;
+    const currentProjectList = JSON.parse(localStorage.getItem('projects'));
+    let projectIndex;
+    let taskIndex;
 
+    for (const project of currentProjectList) {
+        if (project.title === currentProject) {
+            projectIndex = currentProjectList.indexOf(project);
+        };
+    };
+
+    for (const task of currentProjectList[projectIndex].tasks) {
+        if (task.name === currentTask) {
+            taskIndex = currentProjectList[projectIndex].tasks.indexOf(task);
+        };
+    };
+
+    const editTaskName = d.querySelector('.task-edit-title');
+    const editTaskDate = d.querySelector('.task-edit-date-input');
+    const editTaskDescription = d.querySelector('.task-edit-description');
+
+    editTaskName.value = currentProjectList[projectIndex].tasks[taskIndex].name;
+    editTaskDate.value = currentProjectList[projectIndex].tasks[taskIndex].dueDate;
+    editTaskDescription.value = currentProjectList[projectIndex].tasks[taskIndex].description;
+}
+
+export function editTask() {
+    const currentProject = d.querySelector('.current-project-title').textContent;
+    const currentTask = d.querySelector('.task-edit-title').value;
+    const currentProjectList = JSON.parse(localStorage.getItem('projects'));
+    let projectIndex;
+    let taskIndex;
+
+    for (const project of currentProjectList) {
+        if (project.title === currentProject) {
+            projectIndex = currentProjectList.indexOf(project);
+        };
+    };
+
+    for (const task of currentProjectList[projectIndex].tasks) {
+        if (task.name === currentTask) {
+            taskIndex = currentProjectList[projectIndex].tasks.indexOf(task);
+        };
+    };
+
+    const editTaskName = d.querySelector('.task-edit-title');
+    const editTaskDate = d.querySelector('.task-edit-date-input');
+    const editTaskDescription = d.querySelector('.task-edit-description');
+
+    currentProjectList[projectIndex].tasks[taskIndex].name = editTaskName.value;
+    currentProjectList[projectIndex].tasks[taskIndex].dueDate = editTaskDate.value;
+    currentProjectList[projectIndex].tasks[taskIndex].decsription = editTaskDescription.value;
+
+    currentProjectList[projectIndex].tasks.splice(currentProjectList[projectIndex].tasks.indexOf(taskIndex), 1);
+    currentProjectList[projectIndex].tasks.push(new Task(editTaskName.value, editTaskDate.value, editTaskDescription.value));
+
+    updateTasks(currentProjectList);
 };
 
 export function deleteTask(e) {
